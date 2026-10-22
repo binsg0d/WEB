@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Response
-from pydantic import BaseModel 
+from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 class TaskIn(BaseModel):
     title: str
@@ -8,10 +9,25 @@ class TaskIn(BaseModel):
 
 app = FastAPI(title="TaskBoard")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],
+    allow_methods=["GET", "POST"],
+)
+
 @app.post("/tasks", status_code=201)
 def create_task(payload: TaskIn, response: Response):
-    task = ""
+    global NEXT_ID
+
+    task = {
+        "id": NEXT_ID,
+        "title": payload.title,
+        "status": payload.status,
+        "priority": payload.priority,
+    }
+    TASKS[NEXT_ID] = task
     response.headers["Location"] = f"/tasks/{NEXT_ID}"
+    NEXT_ID += 1
     return task
 
 @app.get("/")

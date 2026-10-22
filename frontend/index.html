@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskBoard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>TaskBoard</h1>
+  </header>
+
+  <main class="layout">
+    <section class="panel" aria-labelledby="new-task-heading">
+      <h2 id="new-task-heading">Nowe zadanie</h2>
+      <form id="task-form" class="task-form">
+        <label for="title">Tytuł</label>
+        <input id="title" name="title" type="text" required>
+
+        <label for="priority">Priorytet</label>
+        <select id="priority" name="priority">
+          <option value="low">low</option>
+          <option value="medium" selected>medium</option>
+          <option value="high">high</option>
+        </select>
+
+        <button id="submit-button" type="submit">Dodaj</button>
+        <p id="form-error" class="message message-error" hidden></p>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="tasks-heading">
+      <div class="panel-header">
+        <h2 id="tasks-heading">Zadania</h2>
+        <div class="toolbar">
+          <label for="status-filter">Status</label>
+          <select id="status-filter" name="status-filter">
+            <option value="">wszystkie</option>
+            <option value="open">open</option>
+            <option value="done">done</option>
+          </select>
+          <button id="reload-button" type="button">Odśwież</button>
+        </div>
+      </div>
+
+      <p id="list-status" class="message" role="status" hidden></p>
+      <ul id="task-list" class="task-list"></ul>
+      <p id="total" class="total"></p>
+    </section>
+  </main>
+</body>
+</html>
